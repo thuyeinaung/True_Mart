@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+   <!-- web / webclient_tempalate.xml -->
+	<!--  change Powered by Odoo to Future Hub Myanmar -->
+	<!-- <template id="change_odoo_to_fh" inherit_id="web.login_layout">
+		<xpath expr="//div/div/div/a[@href='https://www.odoo.com']" position="replace">
+			<a href="http://www.futurehubmyanmar.com" target="_blank">Powered by <span>Future Hub Myanmar</span></a>
+		</xpath>
+		
+	</template> -->
+	<template id="login_layout_extend_11" name="Login Layout Extend" inherit_id="web.login_layout">
+        <xpath position="replace" expr="//div[1]">
+
+            <div class="row" style="margin-top: 15px;">
+                <div class="col-md-6 col-md-offset-3 o_database_list">
+                    <div class="text-center">
+                        <img t-attf-src="/company_logo/static/src/img/logo3.png{{ '?dbname='+db if db else '' }}" width="180px" height="80px"/>
+                    </div>
+                    <t t-raw="0"/>
+                    <div class="text-center" t-if="not disable_footer">
+                        <t t-if="not disable_database_manager">
+                            <a class="" href="/web/database/manager">Manage Databases</a> |
+                        </t>
+                        <a href="http://www.futurehubmyanmar.com" target="_blank">Powered by <span>Future Hub Myanmar</span></a>
+                    </div>
+                </div>
+            </div>
+
+        </xpath>
+    </template>
+	
+	<!--  -->
+	<template id="change_odoo_to_fh_in_submenu_footer" inherit_id="web.menu_secondary">
+		<xpath expr="//div[@class='o_sub_menu_footer']" position="replace">
+			<div class="o_sub_menu_footer">
+            Powered by <a href="http://www.futurehubmyanmar.com" target="_blank"><span>FH Myanmar</span></a>
+            <br><span>V3.5.0</span></br>
+        	</div>
+		</xpath>
+	</template>
+	
+	<!--  change logo in title bar -->
+	<!-- <template id="change_logo_in_title_bar" inherit_id="web.layout">
+		<xpath expr="//head/link" position="replace">		
+			 <link type="image/x-icon" rel="shortcut icon" t-att-href="x_icon or '/company_logo/static/src/img/favicon.ico'"/>
+		</xpath>
+		<xpath expr="//title" position="replace">	
+			<title t-esc="title or 'FH'"/>
+		</xpath>
+	</template> -->
+	
+	<template id="web_layout_extend" inherit_id="web.layout">
+        <xpath position="replace" expr="//link[@rel='shortcut icon']"><t>
+            <link type="image/x-icon" rel="shortcut icon"
+                  t-att-href="x_icon or '/company_logo/static/src/img/favicon.ico'"/></t>
+        </xpath>
+        <xpath expr="//title" position="replace">
+            <title><t t-esc="title or 'FH'"/></title>
+        </xpath>
+    </template>
+	
+	<template id="debranding_title" name="Debranding title JS" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/company_logo/static/src/js/script.js"/>
+        </xpath>
+    </template>
+
+</odoo>

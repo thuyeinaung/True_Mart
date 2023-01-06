@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="point_of_sale.template" xml:space="preserve">
+
+	  <t t-extend="Chrome">
+	    <t t-jquery=".pos-logo" t-operation="replace">
+	      <img class="pos-logo" src="/company_logo/static/src/img/logo.png" />  
+	    </t>
+	  </t>
+  
+</templates>

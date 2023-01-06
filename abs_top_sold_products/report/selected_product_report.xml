@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <report 
+            id="action_report_products"
+            string="Products PDF Report"
+            model="report.abs_top_sold_products.report_products" 
+            report_type="qweb-pdf"
+            file="abs_top_sold_products.report_products" 
+            name="abs_top_sold_products.report_products" 
+        />
+        
+        <report 
+            id="action_report_pos_products"
+            string="Products PDF Report"
+            model="report.abs_top_sold_products.report_pos_products" 
+            report_type="qweb-pdf"
+            file="abs_top_sold_products.report_pos_products" 
+            name="abs_top_sold_products.report_pos_products" 
+        />
+
+    </data>
+</odoo>
