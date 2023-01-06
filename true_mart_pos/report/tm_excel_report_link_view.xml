@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<!-- Excel Report -->
+		<report
+		            id="tm_so_report_xlsx"
+		            model="tm.so.report.xls.wizard"
+		            string="SO Report"
+		            report_type="xlsx"
+		            name="true_mart_pos.tm_so_report_xls.xlsx"
+		            file="true_mart_pos.tm_so_report_xls.xlsx"
+		            menu="False"
+		            attachment_use="False"/>
+		<report
+		            id="tm_po_report_xlsx"
+		            model="tm.po.report.xls.wizard"
+		            string="PO Report"
+		            report_type="xlsx"
+		            name="true_mart_pos.tm_po_report_xls.xlsx"
+		            file="true_mart_pos.tm_po_report_xls.xlsx"
+		            menu="False"
+		            attachment_use="False"/>
+	</data>
+</odoo>

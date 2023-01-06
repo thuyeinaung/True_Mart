@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    	<!-- Pdf Report -->
+    	<report id="action_report_cash_book" model="account.cash.book.report"
+			string="Cash Book Report" print_report_name="Cash Book Report"
+			report_type="qweb-pdf" name="true_mart_pos.report_cash_book"
+			file="true_mart_pos.report_cash_book" attachment_use="False" />
+    	
+        <!-- Excel Reports   -->  
+        <report id="action_report_partnerledger_excel" model="account.report.partner.ledger"
+			string="Partner Ledger" report_type="xlsx"
+			name="true_mart_pos.report_partnerledger_excel" file="true_mart_pos.report_partnerledger_excel"
+			attachment_use="False" />
+			
+		<report id="action_report_general_ledger_excel" model="account.report.general.ledger"
+			string="General Ledger" report_type="xlsx"
+			name="true_mart_pos.report_generalledger_excel" file="true_mart_pos.report_generalledger_excel"
+			attachment_use="False" />
+			
+		<report id="action_report_journal_excel" model="account.common.journal.report"
+			string="Journals Audit" report_type="xlsx"
+			name="true_mart_pos.report_journal_excel" file="true_mart_pos.report_journal_excel"
+			attachment_use="False" />
+			
+		<report id="action_report_trial_balance_excel" model="account.balance.report"
+			string="Trial Balance" report_type="xlsx"
+			name="true_mart_pos.report_trialbalance_excel" file="true_mart_pos.report_trialbalance_excel"
+			attachment_use="False" />
+			
+		<report id="action_report_account_tax_excel" model="account.tax.report"
+			string="Tax Report" report_type="xlsx" name="true_mart_pos.report_tax_excel"
+			file="accounting_reports.report_tax_excel" attachment_use="False" />
+			
+		<report id="action_report_financial_excel" model="account.financial.report"
+			string="Financial report" menu="False" report_type="xlsx"
+			name="true_mart_pos.report_financial_excel" file="true_mart_pos.report_financial_excel"
+			attachment_use="False" />
+			
+		<report id="action_aged_partner_balance_excel" model="account.aged.trial.balance"
+			string="Aged Partner Balance" menu="False" report_type="xlsx"
+			name="true_mart_pos.agedpartnerbalance_excel" file="true_mart_pos.agedpartnerbalance_excel"
+			attachment_use="False" />
+			
+		<report id="action_report_cash_book_excel" model="account.cash.book.report"
+			string="Cash Book Report" report_type="xlsx" 
+		 	name="true_mart_pos.report_cash_book_excel" file="true_mart_pos.report_cash_book_excel"
+		 	attachment_use="False" />
+			
+			
+    </data>
+</odoo>

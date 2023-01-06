@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report
+            id="report_product_tag for_shelves"
+            string="Products Tag for Shelves"
+            model="product.template"
+            report_type="qweb-pdf"
+            name="true_mart_pos.report_tag_for_shelves"
+            file="true_mart_pos.report_tag_for_shelves"
+            print_report_name="'Products Tag for Shelves - %s' % (object.name)"
+        />
+    </data>
+</odoo>

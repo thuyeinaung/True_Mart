@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="pos_product_form_view" model="ir.ui.view">
+		<field name="name">pos_product_form_view</field>
+		<field name="model">product.template</field>
+		<field name="inherit_id" ref="product.product_template_only_form_view" />
+		<field name="arch" type="xml">
+			<!-- add min qty -->
+			<field name="barcode" position="after">
+				<field name="product_min_qty" />
+			</field>
+			<field name="product_min_qty" position="after">
+				<field name="has_mininmum_quantity" invisible="1" />
+			</field>
+			<field name="has_mininmum_quantity" position="after">
+				<field name="min_qty" invisible="1" />
+			</field>			
+		</field>
+	</record>
+	
+
+	<!-- product kaban view -->
+	<record id="pos_product_kaban_view" model="ir.ui.view">
+		<field name="name">pos_product_kaban_view</field>
+		<field name="model">product.template</field>
+		<field name="inherit_id" ref="product.product_template_kanban_view" />
+		<field name="arch" type="xml">
+			<field name="qty_available" position="after">
+				<field name="product_min_qty" />
+			</field>
+			<field name="product_min_qty" position="after">
+				<field name="has_mininmum_quantity" invisible="1" />
+			</field>
+			<field name="has_mininmum_quantity" position="after">
+				<field name="min_qty" invisible="1" />
+			</field>		  	
+		</field>
+	</record>
+
+	<!-- product list view -->
+	<record id="pos_product_list_view" model="ir.ui.view">
+		<field name="name">pos_product_list_view</field>
+		<field name="model">product.template</field>
+		<field name="inherit_id" ref="product.product_template_tree_view" />
+		<field name="arch" type="xml">
+			
+			<field name="qty_available" position="after">
+				<field name="product_min_qty" />
+			</field>
+			<field name="product_min_qty" position="after">
+				<field name="has_mininmum_quantity" invisible="1"/>
+			</field>
+			<field name="has_mininmum_quantity" position="after">
+				<field name="min_qty" invisible="1"/>
+			</field>
+			<xpath expr="//tree" position="attributes">
+				<attribute name="decoration-danger">has_mininmum_quantity==True</attribute>
+				<attribute name="decoration-bf">has_mininmum_quantity == True</attribute>
+			</xpath>
+		</field>
+	</record>
+	
+	<record id="view_product_inherit_search" model="ir.ui.view">
+		<field name="name">product.template.filter</field>
+		<field name="model">product.template</field>
+		<field name="inherit_id" ref="product.product_template_search_view"/>
+		<field name="arch" type="xml">
+			<xpath expr="//search" position="inside">
+				<filter string="Minimum Quantity" name="minimum_quantity" domain="[('min_qty','=', 1)]"/>
+			</xpath>
+		</field>
+    </record>
+
+</odoo>

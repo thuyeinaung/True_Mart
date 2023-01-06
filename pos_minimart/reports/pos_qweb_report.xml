@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>    
+        <!--  *************  Product Label  *************** -->
+        <report 
+         	id="pos_product_template_label"
+         	model="product.template"
+         	string="Custom Product Label"
+         	report_type="qweb-pdf"
+         	name="pos_minimart.custom_report_product_template_label"
+         	file="pos_minimart.custom_report_product_template_label"
+         	attachment_use="False"         
+         />		
+         
+         <record id="pos_product_template_label" model="ir.actions.report">
+    		<field name="paperformat_id" ref="pos_minimart.paperformat_productlabel" />
+		</record> 	
+         
+         <report 
+         	id="pos_product_product_label"
+         	model="product.product"
+         	string="Custom Products Label"
+         	report_type="qweb-pdf"
+         	name="pos_minimart.custom_report_productlabel"
+         	file="pos_minimart.custom_report_productlabel"
+         	attachment_use="False"         
+         />	
+         
+         <record id="pos_product_product_label" model="ir.actions.report">
+    		<field name="paperformat_id" ref="pos_minimart.paperformat_productlabel" />
+		</record> 	 
+	</data>
+</odoo>

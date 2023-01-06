@@ -1,0 +1,23 @@
+
+{
+    "name": """POS: product qty""",
+    "summary": """Adds available quantity at products in POS Screen""",
+    "category": "Point Of Sale",
+    "images": ["static/description/FH_Logo.jpg"],
+    "version": "11.0.1.1.0",
+    "application": False,
+    "author": "Thu Yein Aung",
+    "support": "thuyeinaung@futurehubmyanmar.com",
+    "website": "www.futurehubmyanmar.com",
+    "license": "AGPL-3",
+    "depends": ["point_of_sale", "stock"],
+    "external_dependencies": {"python": [], "bin": []},
+    "data": ["data.xml", "views/views.xml"],
+    "qweb": ["static/src/xml/pos.xml"],
+    "post_load": None,
+    "pre_init_hook": None,
+    "post_init_hook": None,
+    "uninstall_hook": None,
+    "auto_install": False,
+    "installable": True,
+}

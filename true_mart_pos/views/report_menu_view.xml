@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<menuitem id="tm_reporting" name="Reporting" sequence="100" />
+	
+	<menuitem id="tm_so_report"  sequence="1"
+		parent="true_mart_pos.tm_reporting" action="true_mart_pos.action_tm_so_report_form_view"/>
+	
+	<menuitem id="tm_po_report"  sequence="2"
+		parent="true_mart_pos.tm_reporting" action="true_mart_pos.action_tm_po_report_form_view"/>
+	
+	
+</odoo>

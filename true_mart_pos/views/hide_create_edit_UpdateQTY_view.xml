@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<!--  create group for update product onhand qty -->
+	<record id="permit_update_product_onhand_qty" model="res.groups">
+    	<field name="name">Not Allowed To Update Stock Quantity</field>
+    </record>
+    
+    <!--  hide 'Update Qty On Hand' button in product -->
+	<record id="tm_hide_update_product_onhand_qty" model="ir.ui.view">
+	<field name="name">tm_hide_update_product_onhand_qty</field>
+		<field name="model">product.template</field>
+		<field name="inherit_id" ref="product.product_template_only_form_view"/>
+		<field name="groups_id" eval="[(6,0,[ref('permit_update_product_onhand_qty')])]"/>
+		<field name="arch" type="xml">
+			<xpath expr="//header/button[2]" position="attributes">				 
+			   <attribute name="invisible">True</attribute>
+			   <attribute name="groups">true_mart_pos.permit_update_product_onhand_qty</attribute>
+			</xpath>    	
+    </field>
+	</record>
+	
+	<!--  hide 'Update Qty On Hand' button in product form view-->
+	<record id="tm_hide_update_product_onhand_qty_normal_product_view" model="ir.ui.view">
+		<field name="name">tm_hide_update_product_onhand_qty_normal_product_view</field>
+		<field name="model">product.product</field>
+		<field name="inherit_id" ref="product.product_normal_form_view"/>
+		<field name="groups_id" eval="[(6,0,[ref('permit_update_product_onhand_qty')])]"/>
+		<field name="arch" type="xml">			
+			<xpath expr="//header/button[2]" position="attributes">				 
+			   <attribute name="invisible">True</attribute>
+			   <attribute name="groups">true_mart_pos.permit_update_product_onhand_qty</attribute>
+			</xpath> 
+		</field>
+	</record>
+	
+	<!--  ********************  hide  create / edit / link button for product   ****************   -->
+
+	<!-- create group for product create menu for sub-d user  -->
+	<record id="not_allowed_product_create_edit_subd_user" model="res.groups">
+    	<field name="name">Not Allowed Product Creation</field>
+	</record>
+	
+	<!--  hide  create/edit button in product list form view -->
+	<record id="tm_product_tree_view_hide_create" model="ir.ui.view">
+		<field name="name">tm_product_tree_view_hide_create</field>
+		<field name="model">product.template</field>
+		<field name="inherit_id" ref="product.product_template_tree_view"/>
+		<field name="groups_id" eval="[(6,0,[ref('not_allowed_product_create_edit_subd_user')])]"/>
+		<field name="arch" type="xml">	
+			<xpath expr="//tree[1]" position="attributes">
+				<attribute name="create">false</attribute>
+				<attribute name="edit">false</attribute>
+				<attribute name="delete">false</attribute>
+			</xpath>
+		</field>
+	</record>
+	
+	<!--  hide  create/edit button in product kaban view -->
+	<record id="tm_product_kanban_hide_create" model="ir.ui.view">
+		<field name="name">tm_product_kanban_hide_create</field>
+		<field name="model">product.template</field>
+		<field name="inherit_id" ref="product.product_template_kanban_view"/>
+		<field name="groups_id" eval="[(6,0,[ref('not_allowed_product_create_edit_subd_user')])]"/>
+		<field name="arch" type="xml">	
+			<xpath expr="//kanban[1]" position="attributes">
+				<attribute name="create">false</attribute>				
+			</xpath>
+		</field>
+	</record>
+	
+	<!--  hide create/edit button in product form view -->
+	<record id="tm_product_tree_kaban_hide_create" model="ir.ui.view">
+		<field name="name">tm_product_tree_kaban_hide_create</field>
+		<field name="model">product.template</field>
+		<field name="inherit_id" ref="product.product_template_only_form_view"/>
+		<field name="groups_id" eval="[(6,0,[ref('not_allowed_product_create_edit_subd_user')])]"/>
+		<field name="arch" type="xml">	
+			<xpath expr="//form[1]" position="attributes">
+				<attribute name="create">false</attribute>
+				<attribute name="edit">false</attribute>
+				<attribute name="delete">false</attribute>
+			</xpath>	
+					
+		</field>
+	</record>
+	
+	<!--  hide create/edit button in product normal form view -->
+	<record id="tm_product_normal_form_hide_create" model="ir.ui.view">
+		<field name="name">tm_product_normal_form_hide_create</field>
+		<field name="model">product.product</field>
+		<field name="inherit_id" ref="product.product_normal_form_view"/>
+		<field name="groups_id" eval="[(6,0,[ref('not_allowed_product_create_edit_subd_user')])]"/>
+		<field name="arch" type="xml">	
+			<xpath expr="//form[1]" position="attributes">
+				<attribute name="create">false</attribute>
+				<attribute name="edit">false</attribute>
+				<attribute name="delete">false</attribute>
+			</xpath>
+		</field>
+	</record>
+	
+	<!--   hide 'Create and Edit' from drop down of product and remove 'open link' in sale order line -->
+	<record id="tm_sale_order_view_form_remove_link_hide_create_edit" model="ir.ui.view">
+		<field name="name">tm_sale_order_view_form_remove_link_hide_create_edit</field>
+		<field name="model">sale.order</field>
+		<field name="inherit_id" ref="sale.view_order_form"/>
+		<field name="groups_id" eval="[(6,0,[ref('not_allowed_product_create_edit_subd_user')])]"/>
+		<field name="arch" type="xml">			
+			<!--  does not show 'Create and Edit' and 'open link' when choosing product in sale order line  -->			
+			 <xpath expr="//tree/field[@name='product_id']" position="attributes">
+			 	<attribute name="options">{'no_create_edit': True, 'no_open': True, 'no_create':True}</attribute>
+			 </xpath>
+		</field>
+	</record>
+	
+	<!--   hide 'Create and Edit' from drop down of product and remove 'open link' in purchase order line -->
+	<record id="tm_purchase_order_view_form_remove_link_hide_create_edit" model="ir.ui.view">
+		<field name="name">tm_purchase_order_view_form_remove_link_hide_create_edit</field>
+		<field name="model">purchase.order</field>
+		<field name="inherit_id" ref="purchase.purchase_order_form"/>
+		<field name="groups_id" eval="[(6,0,[ref('not_allowed_product_create_edit_subd_user')])]"/>
+		<field name="arch" type="xml">			
+			<!--  does not show 'Create and Edit' and 'open link' when choosing product in purchase order line  -->			
+			 <xpath expr="//tree/field[@name='product_id']" position="attributes">
+			 	<attribute name="options">{'no_create_edit': True, 'no_open': True, 'no_create':True}</attribute>
+			 </xpath>
+		</field>
+	</record>
+	
+	<!--   hide 'Create and Edit' from drop down of product and remove 'open link' in inventory adjustment -->
+	<record id="tm_stock_inventory_remove_product_link_create_edit" model="ir.ui.view">
+		<field name="name">tm_stock_inventory_remove_product_link_create_edit</field>
+		<field name="model">stock.inventory</field>
+		<field name="groups_id" eval="[(6,0,[ref('not_allowed_product_create_edit_subd_user')])]"/>
+		<field name="inherit_id" ref="stock.view_inventory_form"/>
+		<field name="arch" type="xml">	
+			<!--  remove 'create and edit'/ product link  -->
+			<xpath expr="//group/group/field[@name='product_id']"
+						position="attributes">
+					<attribute name="options">{'no_create_edit':True,'no_open':True, 'no_create':True}</attribute>							
+			</xpath>	
+			<xpath expr="//tree/field[@name='product_id']"
+						position="attributes">
+					<attribute name="options">{'no_create_edit':True,'no_open':True, 'no_create':True}</attribute>							
+			</xpath>			
+		</field>
+	</record>
+	
+	<!--   hide 'Create and Edit' from drop down of product and remove 'open link' in inventory -->
+	<record id="tm_stock_picking_remove_product_link_create_edit" model="ir.ui.view">
+		<field name="name">tm_stock_picking_remove_product_link_create_edit</field>
+		<field name="model">stock.picking</field>
+		<field name="groups_id" eval="[(6,0,[ref('not_allowed_product_create_edit_subd_user')])]"/>
+		<field name="inherit_id" ref="stock.view_picking_form"/>
+		<field name="arch" type="xml">	
+			<!--  remove 'create and edit'/ product link  -->
+			<xpath expr="//tree/field[@name='product_id']"
+						position="attributes">
+					<attribute name="options">{'no_create_edit':True,'no_open':True,'no_create':True}</attribute>							
+			</xpath>
+		</field>
+	</record>
+
+	
+	<!--   hide 'Create and Edit' from drop down of product and remove 'open link' in scrap -->
+	<record id="tm_stock_scrap_remove_product_link_create_edit" model="ir.ui.view">
+		<field name="name">tm_stock_scrap_remove_product_link_create_edit</field>
+		<field name="model">stock.scrap</field>
+		<field name="groups_id" eval="[(6,0,[ref('not_allowed_product_create_edit_subd_user')])]"/>
+		<field name="inherit_id" ref="stock.stock_scrap_form_view"/>
+		<field name="arch" type="xml">	
+			<!--  remove 'create and edit'/ product link  -->
+			<xpath expr="//group/group/field[@name='product_id']"
+						position="attributes">
+					<attribute name="options">{'no_create_edit':True,'no_open':True,'no_create':True}</attribute>							
+			</xpath>
+		
+		</field>							
+	</record>
+	
+	
+</odoo>

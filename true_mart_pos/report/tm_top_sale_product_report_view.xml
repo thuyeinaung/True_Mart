@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    
+    	<!--  search view  -->
+		<record id="tm_top_sale_product_report_search_view" model="ir.ui.view">
+	        <field name="name">tm_top_sale_product_report_search_view</field>
+	        <field name="model">tm.top.sale.product.report</field>
+	        <field eval="10" name="priority"/>
+	        <field name="arch" type="xml">
+	            <search string="Top Sale Report">
+	                <field name="product_id"/>
+	                <group expand='0' string='Filters'>
+	                    <filter name="stockable" string="Stockable" domain="[('product_id.type', '=', 'product')]"/>
+	                	<separator/>
+	                	<filter name="consumable" string="Consumable" domain="[('product_id.type', '=', 'consu')]"/>
+	                </group>
+	                <group expand='0' string='Group by...'>
+	                    <filter string='Product' name="productgroup" context="{'group_by': 'product_id'}"/> 
+	                    <filter string='Company' domain="[]" context="{'group_by': 'company_id'}" groups="base.group_multi_company"/>
+	               </group>
+	            </search>
+	        </field>
+	    </record>
+    
+        <!--  tree view -->
+		<record model="ir.ui.view" id="tm_top_sale_product_report_tree">
+	        <field name="name">tm_top_sale_product_report_tree</field>
+	        <field name="model">tm.top.sale.product.report</field>
+	        <field eval="10" name="priority"/>
+	        <field name="arch" type="xml">
+	            <tree string="Top Sale Report" create="0" delete="0">
+	                <field name="product_id" invisible="1"/>
+	                <field name="product_name"/>
+	                <field name="pro_sale_price"/>
+	                <field name="pro_purchase_price"/>
+	                <field name="total_sale_quantity"/>
+	            </tree>
+	        </field>
+	    </record>
+	    
+	    <!--  pivot view -->
+	    <record model="ir.ui.view" id="tm_top_sale_product_report_pivot">
+	        <field name="name">tm_top_sale_product_report_pivot</field>
+	        <field name="model">tm.top.sale.product.report</field>
+	        <field name="arch" type="xml">
+	            <pivot string="Top Sale Report">
+	                <field name="product_id" type="row"/>
+	                <field name="total_sale_quantity" type="measure"/>
+	            </pivot>
+	        </field>
+	    </record>
+
+        <record id="action_tm_top_product_sale_report" model="ir.actions.act_window">
+            <field name="name">Top Sale Product Report</field>
+            <field name="res_model">tm.top.sale.product.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,pivot</field>
+            <field name="context">{'search_default_stockable': 1}</field>
+        </record>
+
+        <menuitem id="menu_tm_top_sale_report"
+                  parent="sale.menu_sale_report"
+                  action="action_tm_top_product_sale_report"
+                  name="Top Sale Product Report" sequence="4"/>
+    </data>
+</odoo>
