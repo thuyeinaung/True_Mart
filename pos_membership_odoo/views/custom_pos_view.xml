@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    
+		<!-- Add custom js for pos_membership_odoo -->	    
+        <template id="assets_for_pos_membership_odoo" inherit_id="point_of_sale.assets">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/pos_membership_odoo/static/src/js/pos.js"/>
+            </xpath>
+        </template>
+    	
+    	<record id="point_of_sale.view_report_pos_order_search" model="ir.ui.view">
+            <field name="name">report.pos.order.search</field>
+            <field name="model">report.pos.order</field>
+            <field name="arch" type="xml">
+                <search string="Point of Sale Analysis">
+                    <field name="date"/>
+                    <filter string="Invoiced" domain="[('state','=',('invoiced'))]"/>
+                    <filter string="Not Invoiced" domain="[('state','=',('paid'))]"/>
+                    <separator/>
+                    <filter string="Year" name="year" domain="[('date','&lt;=', time.strftime('%%Y-12-31')),('date','&gt;=',time.strftime('%%Y-01-01'))]" help="POS ordered created during current year"/>
+                    <separator/>
+                    <filter string="My Sales" help="My Sales" domain="[('user_id','=',uid)]"/>
+                    <field name="config_id"/>
+                    <field name="partner_id"/>
+                    <field name="user_id"/>
+                    <field name="product_id"/>
+                    <field name="product_categ_id"/>
+                    <group expand="1" string="Group By">
+                        <filter string="Salesperson" name="User" context="{'group_by':'user_id'}"/>
+                        <filter string="Product Category" context="{'group_by':'product_categ_id'}"/>
+                        <filter string="Membership Card" context="{'group_by':'pos_order_membership_code'}"/>
+                        <filter string="Product" context="{'group_by':'product_id'}"/>
+                        <separator/>
+                        <filter string="Order Month" context="{'group_by':'date:month'}" help="Month of order date"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+    </data>
+</odoo>

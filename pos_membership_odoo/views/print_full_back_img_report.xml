@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+	<template id="report_pos_membership_card_full_back_image">
+    	<t t-call="web.basic_layout">
+    	<t t-foreach="docs" t-as="o">
+
+    		<t t-if="o.membership_template">
+
+		    <!-- Back Side -->
+			    <div class="page">
+			    	<t t-if="o.membership_template.card_back_image">
+				        <div  style="height:200px;width:200px;margin-left:auto;margin-right:auto;" >
+				        	<div class="row" >
+					            <div class="img img-responsive" style="position:absolute;">
+					                <img t-att-src="'data:image/png;base64,%s' % to_text(o.membership_template.card_back_image)" style=" width: 100%;display:block;margin-left:auto;margin-right:auto; border-radius: 15px;"/>
+					            </div>
+					            <div  style="margin-right:10px;background:white !important;position:absolute;top:200px;width:100%;top: 150px;left: 80px;">
+					                <img class="mt8" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.membership_code, 600,50)" t-attf-style="display:block;margin:0 auto;width: #{o.membership_template.barcode_width or '600'}px;height: #{o.membership_template.barcode_hight or '50'}px;"/>
+					                <p style="font-size:15px;text-align:center;margin:0;color: black;" t-esc="o.hide_barcode" />
+					            </div>
+				      		</div>
+				        </div>
+				    </t>
+
+				    <t t-if="not o.membership_template.card_back_image">
+
+				    	<div class="row" style="height:204px;width:325px;">
+				            <div class="img img-responsive" t-attf-style="position:absolute;width: #{o.membership_template.label_width or '100'}% ;">
+				                <img src="/pos_membership_odoo/static/src/img/comman.jpg" style="border-radius: 15px;"/>
+				            </div>
+				            <div class="col-md-12" style="margin:0;background:white !important;position:absolute;top:200px;width:100%;">
+				                <img class="mt8" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.membership_code, 600,50)" t-attf-style="display:block;margin:0 auto;width: #{o.membership_template.barcode_width or '600'}%;height: #{o.membership_template.barcode_hight or '50'}px;"/>
+				                <p style="font-size:15px;text-align:center;margin:0;color: black;" t-esc="o.hide_barcode" />
+				            </div>
+				        </div>
+
+				    </t>
+
+			    </div>
+			</t>
+
+			<t t-if="not o.membership_template">
+				
+				<div class="page">
+			    	<div class="row" style="height:204px;width:325px;">
+						<div class="img img-responsive">
+			    			<img src="/pos_membership_odoo/static/src/img/comman.jpg" style="width:100%;border-radius: 15px;"/>
+			    		</div>
+						<div class="col-md-12 ml8" style="position:absolute;width:50%;top:10px;">
+							<div class="col-sm-12" style="position:absolute;width:50%;left:10px;top:5px;">
+					 			<img src="/pos_membership_odoo/static/src/img/vip.png" style="width:100%;"/>
+					 		</div>
+					 		<br/>
+					 		<div class="owner_name" style="position:absolute;width:50%;top:20px;font-size:10px;right:0;">
+					 			<label style="color:white !important;">Your name </label>
+					 			<br/>
+					 			<input type="text" style="background:white !important;"/>
+					 		</div>
+				 		</div>
+				 		<div class="col-md-12" style="background:white !important;position:absolute;top:110px;">
+					 		<img class="mt8" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.membership_code,300, 50)" style="width:325px;display:block;height:20px;margin:0 auto;"/>
+					 		<p style="font-size:15px;text-align:center;margin:0;" t-field="o.hide_barcode"/>
+						</div>
+					</div>
+			    </div>
+			</t>
+			
+		    <p style="page-break-after:always"></p>
+		</t>
+		</t>
+	</template>
+
+<record id="full_back_img_paper_format" model="report.paperformat">
+    <field name="name">Membership card full back image</field>
+    <field name="default" eval="True" />
+    <field name="format">custom</field>
+    <field name="page_height">150</field>
+    <field name="page_width">200</field>
+    <field name="margin_top">10</field>
+    <field name="margin_bottom">0</field>
+    <field name="margin_left">32</field>
+    <field name="margin_right">54</field>
+    <field name="header_line" eval="False" />
+	<field name="orientation">Portrait</field>
+    <field name="header_spacing">0</field>
+    <field name="dpi">80</field>
+</record>
+
+<record id="pos_membership_odoo.action_membership_card_full_back_img" model="ir.actions.report">
+    <field name="name">Membership Card Full Back Image</field>
+    <field name="model">pos.membership.full.back.image</field>
+    <field name="report_name">pos_membership_odoo.report_pos_membership_card_full_back_image</field>
+    <field name="paperformat_id" ref="pos_membership_odoo.full_back_img_paper_format"/>
+</record>
+
+</data>
+</odoo>

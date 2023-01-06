@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- POS Number Of Top Clients  -->
+	 <record id="view_pos_membership_top_clients_form_view" model="ir.ui.view">
+	        <field name="name">pos.membership.top.clients.form.view</field>
+	        <field name="model">pos.membership.top.clients.cards</field>
+	        <field name="arch" type="xml">
+	           <form string="Top Clients Membership Cards" >
+					<group string="Top Clients Membership Cards">
+						<group>
+							<field name="start_dt"/>
+						</group>
+						<group>
+						    <field name="end_dt"/>
+						</group>
+						<group>
+							<field name="no_of_top_clients"/>
+						</group>
+					</group>
+					<footer>
+                        <button name="membership_generate_report" string="Print" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel" />
+                    </footer>
+				</form>
+			</field>
+	    </record>  
+
+</odoo>
+

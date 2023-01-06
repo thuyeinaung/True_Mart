@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+
+	 <!-- POS Membership Configuration -->
+	 <record id="view_pos_membership_setting_tree_view" model="ir.ui.view">
+            <field name="name">pos.membership.config.tree.view</field>
+            <field name="model">pos.membership.setting</field>
+            <field name="arch" type="xml">
+               <tree string="POS Membership Configuration">													
+						<field name="name"/>				
+						<field name="issue_date"/>	
+						<!--<field name="discount_amount"/>-->
+						<field name="pricelist_id"/>
+				</tree>
+				</field>
+        </record>
+
+	<!-- POS Membership Template Configuration -->
+	<record id="view_pos_membership_template_setting_form_view" model="ir.ui.view">
+		<field name="name">pos.membership.template.config.from.view</field>
+		<field name="model">pos.membership.template.settings</field>
+		<field name="arch" type="xml">
+			<form string="POS Membership Template Configuration" >
+					<sheet>
+						<group string="Membership Template Configuration">
+							<group>
+								<field name="card_name" required="1"/>
+							</group>
+							<group>
+							    <field name="if_default_template"/>
+							</group>
+							<group>
+								<field name="card_front_image" widget="image"/>
+							</group>
+							<group>
+							    <field name="card_back_image" widget="image"/>
+							</group>
+							<group string="Label">
+							    <field name="print_qty"/>
+							    <field name="label_hight"/>
+							    <field name="label_width"/>
+							</group>
+							<group string="Barcode">
+							    <field name="barcode_hight"/>
+							    <field name="barcode_width"/>
+							</group>
+						</group>					
+					</sheet>
+			</form>
+		</field>
+	</record>
+
+	<!-- POS Order Membership Code -->
+	<record id="view_pos_order_membership_code" model="ir.ui.view">
+		<field name="model">pos.order</field>
+		<field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='partner_id']" position="after">
+				<field name="pos_order_membership_code"/>
+			</xpath>
+		</field>
+	</record>
+
+   <record id="pos_membership_setting_form_view" model="ir.ui.view">
+            <field name="name">pos.membership.config.form.view</field>
+            <field name="model">pos.membership.setting</field>
+            <field name="arch" type="xml">
+				<form string="POS Membership Configuration" >
+						<sheet>
+							<group string="Membership Configuration">
+								<group>
+									<field name="name" required="1"/>
+								    <!--<field name="discount_amount"/>-->
+								    <field name="pricelist_id"/>
+									
+								</group>
+							<group>
+								<field name="issue_date"/>
+							</group>
+							</group>
+							<br/>
+
+							<group string="Membership Configuration (When some discount already exists in orderlines)">
+								<group>
+								    <field name="allow_one_customer"/>
+									
+								</group>
+							<group>
+								<field name="apply_membershipcards"/>
+								<field name="apply_membership_discount" widget="radio" attrs="{'invisible': [('apply_membershipcards', '!=', True)]}"/>
+							</group>
+							</group>
+														
+						</sheet>
+				</form>
+			
+            </field>
+        </record>
+
+ 		<record model="ir.actions.act_window" id="action_pos_membership_setting">
+            <field name="name">Membership Configuration</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pos.membership.setting</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+	 <!-- POS Membership -->
+	 <record id="view_pos_membership_cards_tree_view" model="ir.ui.view">
+            <field name="name">pos.membership.cards.tree.view</field>
+            <field name="model">pos.membership</field>
+            <field name="arch" type="xml">
+               <tree string="POS Membership Cards">													
+						<field name="name"/>				
+						<field name="membership_id"/>	
+						<field name="issue_date"/>	
+						<field name="expiry_date"/>
+						<field name="partner_id"/>
+				</tree>
+				</field>
+        </record>
+	
+	<record id="view_pos_membership_card_front_img" model="ir.ui.view">
+	    <field name="name">pos.membership.card.front.img.view</field>
+	    <field name="model">pos.membership.front.image</field>
+	    <field name="arch" type="xml">
+	    	<form string="Print Membership Card Front Image">
+                <separator string="Do you want to print Front Image ?" colspan="4" />
+                <footer>
+                    <button name="print_membership_card_front_img" string="Print" type="object" class="btn-primary"/>
+                    <button special="cancel" string="Cancel" class="btn-default"/>
+                </footer>
+            </form>
+		</field>
+	</record>
+
+	<record id="view_pos_membership_card_back_img" model="ir.ui.view">
+	    <field name="name">pos.membership.card.back.img.view</field>
+	    <field name="model">pos.membership.back.image</field>
+	    <field name="arch" type="xml">
+	    	<form string="Print Membership Card Back Image">
+                <separator string="Do you want to print Back Image ?" colspan="4" />
+                <footer>
+                    <button name="print_membership_card_back_img" string="Print" type="object" class="btn-primary"/>
+                    <button special="cancel" string="Cancel" class="btn-default"/>
+                </footer>
+            </form>
+		</field>
+	</record>
+
+	<record id="view_pos_membership_card_full_front_img" model="ir.ui.view">
+	    <field name="name">pos.membership.card.full.front.img.view</field>
+	    <field name="model">pos.membership.full.front.image</field>
+	    <field name="arch" type="xml">
+	    	<form string="Print Membership Card Full Front Image">
+                <separator string="Do you want to print Full Front Image ?" colspan="4" />
+                <footer>
+                    <button name="print_membership_card_full_front_img" string="Print" type="object" class="btn-primary"/>
+                    <button special="cancel" string="Cancel" class="btn-default"/>
+                </footer>
+            </form>
+		</field>
+	</record>
+
+	<record id="view_pos_membership_card_full_back_img" model="ir.ui.view">
+	    <field name="name">pos.membership.card.full.back.img.view</field>
+	    <field name="model">pos.membership.full.back.image</field>
+	    <field name="arch" type="xml">
+	    	<form string="Print Membership Card Full Back Image">
+                <separator string="Do you want to print Full Back Image ?" colspan="4" />
+                <footer>
+                    <button name="print_membership_card_full_back_img" string="Print" type="object" class="btn-primary"/>
+                    <button special="cancel" string="Cancel" class="btn-default"/>
+                </footer>
+            </form>
+		</field>
+	</record>
+
+
+   <record id="view_pos_membership_cards_form_view" model="ir.ui.view">
+            <field name="name">pos.membership.cards.form.view</field>
+            <field name="model">pos.membership</field>
+            <field name="arch" type="xml">
+				<form string="New Membership Cards">
+					<header>
+
+					<button class="oe_highlight" name="print_membership_card_report" string="Print" type="object"/>
+					</header>
+						<sheet>
+							<group>
+								<group>
+									<field name="name" required="1" placeholder="Enter Membeship Card Here..."/>
+									<field name="membership_id" required="1"/>
+									<field name="partner_id" options="{'no_create': True}"/>
+									</group>
+								<group>
+									<field name="issue_date" required="1"/>
+									<field name="expiry_date"/>
+									<field name="membership_code" readonly="1" />
+								</group>
+							</group>
+							<group>
+								<field name="membership_template"/>
+							</group>
+							<newline/>
+						</sheet>
+					
+				</form>
+
+            </field>
+        </record>
+
+ 		<record model="ir.actions.act_window" id="action_pos_membership">
+            <field name="name">All Membership Cards</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pos.membership</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_pos_membership_select_template">
+            <field name="name">Membership Card Templates</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pos.membership.template.settings</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_pos_top_clients_cards">
+            <field name="name">Top Clients Membership Cards</field>
+            <field name="res_model">pos.membership.top.clients.cards</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+
+		<menuitem name="Membership Management" id="menu_pos_membership" parent="point_of_sale.menu_point_root" sequence="30"/>
+
+		<menuitem name="Top Clients Membership Cards" action="action_pos_top_clients_cards" id="menu_pos_top_client_membership_cards"
+        parent="point_of_sale.menu_point_rep"/>
+
+		<menuitem parent="menu_pos_membership" action="action_pos_membership_setting" id="menu_pos_membership_setting"
+            sequence="30"/>
+            
+		<menuitem parent="menu_pos_membership" name="All Membership Cards" action="action_pos_membership" id="menu_pos_membership_cards"
+            sequence="40"/>
+            
+     	<menuitem parent="menu_pos_membership" name="Membership Card Template" action="action_pos_membership_select_template" id="menu_pos_membership_template"
+        sequence="50" groups="point_of_sale.group_pos_manager"/>
+
+
+	</data>
+</openerp>

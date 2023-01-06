@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+	<template id="report_pos_membership_card_full_front_image">
+    	<t t-call="web.basic_layout">
+    	<t t-foreach="docs" t-as="o">
+			    
+			<t t-if="o.membership_template">
+				<!-- Front Side -->
+			    <div class="page" >
+				        <t t-if="o.membership_template.card_front_image">
+					       	<div style="height:500px;width:500px;">	
+				        	<div class="row">
+				        	<div class="img img-responsive" >
+				        		<img t-att-src="'data:image/png;base64,%s' % to_text(o.membership_template.card_front_image)" style=" width: 100%;display:block;margin-left:auto;margin-right:auto; border-radius: 15px;" />
+				        	</div>
+				        	</div>
+				    		</div>
+
+				        </t>
+				        <t t-if="not o.membership_template.card_front_image">
+				        	<div class="row">
+					            <div class="col-xs-12 ml8" style="position:absolute;top:25px;right:10px;left:150px;font-size:15px;">
+					                <img t-att-src="'data:image/png;base64,%s' % to_text(o.partner_id.company_id.logo)" style="max-width:20%;"/>
+					                <br/>
+					                <span t-field="o.partner_id.company_id.name" style="color:white !important;" />
+					                <br/>
+					                <span t-field="o.partner_id.company_id.street" style="color:white !important;" />
+					                <span t-field="o.partner_id.company_id.street2" style="color:white !important;" />
+					                <br/>
+					                <span t-field="o.partner_id.company_id.city" style="color:white !important;" />
+					            </div>
+					        </div>
+					    </t>
+			    </div>
+
+			</t>
+
+			<t t-if="not o.membership_template">
+				
+				<div class="page">
+					<div class="wrapper" style="height:204px;width:325px;" >
+				        <div class="img img-responsive">
+			        		<img src="/pos_membership_odoo/static/src/img/comman.jpg" style="width:100%;border-radius: 15px;"/>
+			        	</div>
+			        	<div class="row">
+				            <div class="col-xs-12 ml8" style="position:absolute;top:25px;right:10px;left:130px;font-size:15px;" >
+				                <img t-att-src="'data:image/png;base64,%s' % to_text(o.partner_id.company_id.logo)" style="max-width:20%;"/>
+				                <br/>
+				                <span t-field="o.partner_id.company_id.name" style="color:white !important;" />
+				                <br/>
+				                <span t-field="o.partner_id.company_id.street" style="color:white !important;" />
+				                <span t-field="o.partner_id.company_id.street2" style="color:white !important;" />
+				                <br/>
+				                <span t-field="o.partner_id.company_id.city" style="color:white !important;" />
+				            </div>
+				        </div>
+				    </div>
+			    </div>
+			</t>
+			
+	    	<p style="page-break-after:always"></p>
+		</t>
+		</t>
+	</template>
+
+<record id="full_front_img_paper_format" model="report.paperformat">
+    <field name="name">Membership card full front image</field>
+    <field name="default" eval="True" />
+    <field name="format">custom</field>
+    <field name="page_height">150</field>
+    <field name="page_width">150</field>
+    <field name="margin_top">10</field>
+    <field name="margin_bottom">10</field>
+    <field name="margin_left">10</field>
+    <field name="margin_right">10</field>
+    <field name="header_line" eval="False" />
+	<field name="orientation">Portrait</field>
+    <field name="header_spacing">0</field>
+    <field name="dpi">80</field>
+</record>
+
+<record id="pos_membership_odoo.action_membership_card_full_front_img" model="ir.actions.report">
+    <field name="name">Membership Card Full Front Image</field>
+    <field name="model">pos.membership.full.front.image</field>
+    <field name="report_name">pos_membership_odoo.report_pos_membership_card_full_front_image</field>
+    <field name="paperformat_id" ref="pos_membership_odoo.full_front_img_paper_format"/>
+</record>
+
+</data>
+</odoo>

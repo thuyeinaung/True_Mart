@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <templates id="pos_membership_odoo_template" inherit_id="point_of_sale.template" xml:space="preserve">
+
+
+
+	<!-- PaymentScreen-Paymentlines -->
+	<t t-extend="PaymentScreen-Paymentlines">
+		<t t-jquery=".message" t-operation="before">
+            <div class='membershipmessage' style="color: #0075AC; text-align: center; font-size: 18px;">
+            </div>
+		</t>
+	</t>
+	
+	
+	<!-- PaymentScreenWidget -->
+	<t t-extend="PaymentScreenWidget">
+		<t t-jquery=".payment-buttons" t-operation="append">
+			<br/><br/>
+            <div class='button usemembershipmethod'>
+                <i class='fa fa-angellist' /> 
+                <span class='js_membership_name'> 
+                    Use Membership Card
+                </span>
+            </div>
+		</t>
+	</t>
+    
+    <t t-name="ApplyMembershipPopupWidget">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput" style="height: 250px !important;">
+                <p class="title" style="background-color: #0075AC; color: #fff;">Apply Membership Card</p>
+                <p class="body" style="color: #0075AC;">Enter Your Membership Card Code Here</p>
+                 <input id ="enter_card_code" type="text" class='input-field' name="enter_card_code" style='margin: 0 auto;'></input>
+                <div class="footer">
+                    <div class="button cancel" style="background-color: #0075AC; color: #fff;">
+                        Cancel 
+                    </div>
+                    <div class="button confirm" id="apply_membership_card" style="background-color: #0075AC; color: #fff;">
+                        Apply 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+    
+    
+    <!--  Add membership discount in POS slip ticket -->
+   <t t-extend="PosTicket">
+        <t t-jquery='.pos-sale-ticket' t-operation='replace'>
+            <div class="pos-sale-ticket">            
+	            <div class="pos-center-align"><t t-esc="order.formatted_validation_date"/> <t t-esc="order.name"/></div>
+	            <table>
+                    	<tr width="100%">
+                    		<td  width="30%">
+                    			<img src='/pos_membership_odoo/static/src/img/true_mart_logo1.png' style="width:80px;height:80px;"/>
+                    		</td>
+                    		<td  width="70%">
+                    			<span style="font-size: 22px;"><t t-esc="widget.pos.company.name" /></span>
+	            				<div class="receipt-phone" style="font-size: 10px;">
+	                				Phone: <t t-esc="widget.pos.company.phone || ''"/><br />
+	            				</div>
+	            				<div class="receipt-user">
+	                				Casher: <t t-esc="widget.pos.get_cashier().name"/><br />
+	            				</div>
+								<t t-if="order.get_client()">
+                            	Customer: <t t-esc="order.get_client().name"/>
+                        	</t>
+                    		</td>
+                    	</tr>
+                    </table>
+	            <t t-if="receipt.header">
+	                <div style='text-align:center'>
+	                    <t t-esc="receipt.header" />
+	                </div>
+	                
+	            </t>
+	            <table class='receipt-orderlines'>
+	                <colgroup>
+	                    <col width='50%' />
+                        <col width='15%' />
+                        <col width='30%' />
+	                </colgroup>
+	                <tr style="border-bottom: 1px solid rgb(0, 0, 0);">
+                        <th>Description</th>
+                        <th style="text-align:right">Qty</th>
+                        <th style="text-align:right">Amount</th>
+                    </tr>
+	                <tr t-foreach="orderlines" t-as="orderline">
+	                    <td>
+	                        <t t-esc="orderline.get_product().display_name"/>
+	                         <t t-if="orderline.get_discount() > 0">
+	                            <div class="pos-disc-font">
+	                                With a <t t-esc="orderline.get_discount()"/>% discount
+	                            </div>
+	                        </t>
+	                    </td>
+	                    <td class="pos-right-align">
+	                        <!-- change 'get_quantity_str_with_unit' to 'get_quantity_str' in order to get QTY only  -->
+							<!-- <t t-esc="orderline.get_quantity_str_with_unit()"/> -->
+							<t t-esc="orderline.get_quantity_str()" />
+	                    </td>
+						<td class="pos-right-align">
+							<t t-esc="widget.format_currency(orderline.get_display_price())"/>
+							<!-- <t t-if="orderline.get_discount() > 0">
+                            	<t t-esc="widget.format_currency(orderline.get_product().lst_price*orderline.get_quantity_str_with_unit()* (1 - orderline.get_discount()/100))"/>
+                        	</t>
+                        	<t t-else="">
+                            	<t t-esc="widget.format_currency(orderline.get_product().lst_price*orderline.get_quantity_str_with_unit())"/>
+                        	</t> -->
+	                    </td>
+	                </tr>
+	            </table>
+	            
+	            <table class='receipt-total'>
+					<tr style="border-top: 1px solid rgb(0, 0, 0);">
+	                    <td>Subtotal:</td>
+	                    <td class="pos-right-align">
+	                    	<!-- <t t-esc="widget.format_currency(order.get_actual_real_total())"/> -->
+	                        <t t-esc="widget.format_currency(order.get_total_without_tax())"/>
+	                    </td>
+	                </tr>
+					<!-- <tr style="border-top: 1px solid rgb(0, 0, 0);">
+	                    <td>Actualtotal:</td>
+	                    <td class="pos-right-align">
+	                    	<t t-esc="widget.format_currency(order.get_actual_real_total())"/>
+	                    </td>
+	                </tr> -->
+	                <t t-foreach="order.get_tax_details()" t-as="taxdetail">
+	                    <tr>
+	                        <td><t t-esc="taxdetail.name" /></td>
+	                        <td class="pos-right-align">
+	                            <t t-esc="widget.format_currency(taxdetail.amount)" />
+	                        </td>
+	                    </tr>
+	                </t>
+	                
+	                <tr class="emph" style="border-top: 1px solid rgb(0, 0, 0);">
+	                    <td>Total:</td>
+	                    <td class="pos-right-align">
+	                        <t t-esc="widget.format_currency(order.get_total_with_tax())"/>
+	                    </td>
+	                </tr>
+					<tr>
+	                    <t t-if="order.get_total_discount() > 0">
+	                        <td>Discount:</td>
+	                        <td class="pos-right-align">
+	                            <t t-esc="widget.format_currency(order.get_total_discount())"/>
+	                        </td>
+	                    </t>
+	                </tr>
+					<tr>
+					<t t-if="order.get_member_discount() > 0 and widget.pos.get_client()">
+                        <td>Membership Discount:</td>
+                        <td class="pos-right-align">
+                            <t t-esc="widget.format_currency(order.get_member_discount())"/>
+                        </td>
+                    </t>
+					<t t-elif="order.get_pricelist_discount() > 0">
+                        <td>Pricelist Discount:</td>
+                        <td class="pos-right-align">
+                            <t t-esc="widget.format_currency(order.get_pricelist_discount())"/>
+                        </td>
+                    </t>
+					<t t-else="">
+                        
+                    </t>
+	                <!-- <t t-if="order.get_member_discount() > 0 and widget.pos.get_client()">
+                        <td>Membership Discount:</td>
+                        <td class="pos-right-align">
+                            <t t-esc="widget.format_currency(order.get_member_discount())"/>
+                        </td>
+                    </t>
+					<t t-else="order.get_pricelist_discount() > 0 and widget.pos.get_client() = false">
+                        <td>Pricelist Discount:</td>
+                        <td class="pos-right-align">
+                            <t t-esc="widget.format_currency(order.get_pricelist_discount())"/>
+                        </td>
+                    </t> -->
+					</tr>
+	            </table>
+	            <br />
+	            <table class='receipt-paymentlines'>
+	                <t t-foreach="paymentlines" t-as="line">
+	                  <tr>
+	                      <td>
+	                          <t t-esc="line.name"/>
+	                      </td>
+	                      <td class="pos-right-align">
+	                          <t t-esc="widget.format_currency(line.get_amount())"/>
+	                      </td>
+	                  </tr>
+	                </t>
+	            </table>
+	            
+	            <table class='receipt-change'>
+	                <tr style="border-top: 1px solid rgb(0, 0, 0);"><td>Change:</td><td class="pos-right-align">
+	                    <t t-esc="widget.format_currency(order.get_change())"/>
+	                    </td></tr>
+	            </table>
+	            <t t-if="receipt.footer">
+	                <br />
+	                <div style='text-align:center'>
+	                    <t t-esc="receipt.footer" />
+	                </div>
+	            </t>
+	        </div>
+        </t>
+    </t>     
+    
+  	</templates>
+  	
+  	

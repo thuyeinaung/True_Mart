@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+		<report 
+            string="Membership Card" 
+            id="action_membership_cards" 
+            model="pos.membership" 
+            report_type="qweb-pdf"
+            name="pos_membership_odoo.report_pos_membership_cards" 
+            file="pos_membership_odoo.report_pos_membership_cards" 
+			menu="False"
+        />
+        <report 
+            string="Top Clients Membership Card" 
+            id="action_top_clients_membership_cards" 
+            model="pos.membership.top.clients.cards" 
+            report_type="qweb-pdf"
+            name="pos_membership_odoo.top_client_wizard_report" 
+            file="pos_membership_odoo.top_client_wizard_report" 
+            menu="False"
+        />
+
+        <report 
+            string="Membership Card Front Image" 
+            id="action_membership_card_front_img" 
+            model="pos.membership.front.image" 
+            report_type="qweb-pdf"
+            name="pos_membership_odoo.report_pos_membership_card_front_image" 
+            file="pos_membership_odoo.report_pos_membership_card_front_image" 
+            menu="False"
+        />
+
+        <report 
+            string="Membership Card Back Image" 
+            id="action_membership_card_back_img" 
+            model="pos.membership.back.image" 
+            report_type="qweb-pdf"
+            name="pos_membership_odoo.report_pos_membership_card_back_image" 
+            file="pos_membership_odoo.report_pos_membership_card_back_image" 
+            menu="False"
+        />
+
+        <report 
+            string="Membership Card Full Front Image" 
+            id="action_membership_card_full_front_img" 
+            model="pos.membership.full.front.image" 
+            report_type="qweb-pdf"
+            name="pos_membership_odoo.report_pos_membership_card_full_front_image" 
+            file="pos_membership_odoo.report_pos_membership_card_full_front_image" 
+            menu="False"
+        />
+
+        <report 
+            string="Membership Card Full Back Image" 
+            id="action_membership_card_full_back_img" 
+            model="pos.membership.full.back.image" 
+            report_type="qweb-pdf"
+            name="pos_membership_odoo.report_pos_membership_card_full_back_image" 
+            file="pos_membership_odoo.report_pos_membership_card_full_back_image" 
+            menu="False"
+        />
+
+        <act_window 
+            id="pos_membership_only_front_img_report"
+            name="Print Front Image"
+            src_model="pos.membership"
+            res_model="pos.membership.front.image"
+            view_mode="form"
+            target="new"
+            key2="client_action_multi"/>
+
+        <act_window 
+            id="pos_membership_only_back_img_report"
+            name="Print Back Image"
+            src_model="pos.membership"
+            res_model="pos.membership.back.image"
+            view_mode="form"
+            target="new"
+            key2="client_action_multi"/>
+
+        <act_window 
+            id="pos_membership_full_front_img_report"
+            name="Print Full Front Image"
+            src_model="pos.membership"
+            res_model="pos.membership.full.front.image"
+            view_mode="form"
+            target="new"
+            key2="client_action_multi"/>
+
+        <act_window 
+            id="pos_membership_full_back_img_report"
+            name="Print Full Back Image"
+            src_model="pos.membership"
+            res_model="pos.membership.full.back.image"
+            view_mode="form"
+            target="new"
+            key2="client_action_multi"/>
+
+        <!-- <act_window 
+            id="pos_membership_full_front_img_report"
+            name="Print Front Image Full Sheet"
+            src_model="pos.membership"
+            res_model="pos.membership"
+            view_mode="form"
+            target="new"
+            key2="client_action_multi"/>
+
+        <act_window 
+            id="pos_membership_full_back_img_report"
+            name="Print Back Image Full Sheet"
+            src_model="pos.membership"
+            res_model="pos.membership"
+            view_mode="form"
+            target="new"
+            key2="client_action_multi"/>  -->
+
+
+        <!-- <act_window 
+            id="pos_membership_front_img_report"
+            string="Print Front Image"
+            model="pos.membership" 
+            report_type="qweb-pdf"
+            name="pos_membership_odoo.report_pos_membership_cards_main" 
+            file="pos_membership_odoo.report_pos_membership_cards"
+            attachment_use="False"  
+        />
+
+        <act_window 
+            id="pos_membership_back_img_report"
+            string="Print Back Image"
+            model="pos.membership" 
+            report_type="qweb-pdf"
+            name="pos_membership_odoo.report_pos_membership_cards_main" 
+            file="pos_membership_odoo.report_pos_membership_cards"
+            attachment_use="False"
+        /> -->
+
+    </data>
+</odoo>
